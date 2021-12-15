@@ -31,11 +31,6 @@ func init() {
 	)
 }
 
-type OAuthResponse struct {
-	AccessToken string `json:"access_token"`
-	ExpiresIn   uint16 `json:"expires_in"`
-}
-
 func (c client) SendWebhook(ctx context.Context, accessToken string, payload WebhookNotifyRequest) error {
 	bsBody, _ := json.Marshal(payload)
 	reqURL, _ := url.Parse(c.Config.URL + "/webhook/execute")
