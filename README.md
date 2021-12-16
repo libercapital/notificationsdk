@@ -1,5 +1,6 @@
 # notification-sdk
 
+[![pipeline status](https://gitlab.com/bavatech/architecture/software/libs/go-modules/notificationsdk/badges/main/pipeline.svg)](https://gitlab.com/bavatech/architecture/software/libs/go-modules/notificationsdk/-/commits/main)[![coverage report](https://gitlab.com/bavatech/architecture/software/libs/go-modules/notificationsdk/badges/main/coverage.svg)](https://gitlab.com/bavatech/architecture/software/libs/go-modules/notificationsdk/-/commits/main)
 
 
 ## Getting started

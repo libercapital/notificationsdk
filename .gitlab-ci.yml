@@ -1,0 +1,11 @@
+image: golang:1.17
+
+stages:
+  - test
+  
+unit_tests:
+  stage: test
+  script:
+    - go get ./...
+    - go get gotest.tools/gotestsum
+    - make unit-test
