@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"net/url"
 	"time"
 
 	httptrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/net/http"
@@ -33,26 +32,24 @@ func init() {
 
 func (c client) SendWebhook(ctx context.Context, accessToken string, payload WebhookNotifyRequest) error {
 	bsBody, _ := json.Marshal(payload)
-	reqURL, _ := url.Parse(c.Config.URL + "/webhook/execute")
 
-	response, err := HttpClient.Do(&http.Request{
-		URL:    reqURL,
-		Method: http.MethodPost,
-		Header: http.Header{
-			"Authorization": []string{"Bearer " + accessToken},
-			"Content-Type":  []string{"application/json; charset=UTF-8"},
-		},
-		Body: io.NopCloser(bytes.NewReader(bsBody)),
-	})
-
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.Config.URL+"/webhook/execute", io.NopCloser(bytes.NewReader(bsBody)))
 	if err != nil {
 		return err
 	}
 
-	defer response.Body.Close()
+	req.Header.Set("Authorization", "Bearer "+accessToken)
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	if response.StatusCode != http.StatusOK {
-		return fmt.Errorf("http request error (status=%v)", response.Status)
+	res, err := HttpClient.Do(req)
+	if err != nil {
+		return err
+	}
+
+	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		return fmt.Errorf("http request error (status=%v)", res.Status)
 	}
 
 	return nil
