@@ -10,6 +10,7 @@ type client struct {
 
 type Client interface {
 	SendWebhook(ctx context.Context, accessToken string, payload WebhookNotifyRequest) error
+	SendWhatsapp(ctx context.Context, accessToken string, payload WhatsappNotifyRequest) error
 }
 
 func NewClient(config Config) Client {
