@@ -8,11 +8,7 @@ import (
 	"net/http"
 )
 
-const (
-	PaymentLinkInvoiceCreatedTemplate = "PAYMENT_LINK_INVOICE_CREATED"
-)
-
-func (c client) SendWhatsapp(ctx context.Context, accessToken string, payload WhatsappNotifyRequest) error {
+func (c client) SendEmail(ctx context.Context, accessToken string, payload EmailRequest) error {
 	bsBody, _ := json.Marshal(payload)
 
 	headers := map[string]string{
@@ -20,7 +16,8 @@ func (c client) SendWhatsapp(ctx context.Context, accessToken string, payload Wh
 		"Content-Type":  "application/json; charset=UTF-8",
 	}
 
-	res, err := HttpClient.DoRequest(ctx, http.MethodPost, c.Config.URL+"/send-whatsapp", headers, bytes.NewReader(bsBody))
+	res, err := HttpClient.DoRequest(ctx, http.MethodPost, c.Config.URL+"/send-email", headers, bytes.NewReader(bsBody))
+
 	if err != nil {
 		return err
 	}

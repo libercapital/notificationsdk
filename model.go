@@ -11,3 +11,15 @@ type WhatsappNotifyRequest struct {
 	Metadata []string `json:"metadata"`
 	Template string   `json:"template"`
 }
+
+type EmailRequest struct {
+	To       Address                `json:"to"`
+	From     Address                `json:"from"`
+	Template string                 `json:"template"`
+	MetaData map[string]interface{} `json:"meta_data"`
+}
+
+type Address struct {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+}
