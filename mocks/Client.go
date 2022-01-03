@@ -14,6 +14,20 @@ type Client struct {
 	mock.Mock
 }
 
+// SendEmail provides a mock function with given fields: ctx, accessToken, payload
+func (_m *Client) SendEmail(ctx context.Context, accessToken string, payload notificationsdk.EmailRequest) error {
+	ret := _m.Called(ctx, accessToken, payload)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, string, notificationsdk.EmailRequest) error); ok {
+		r0 = rf(ctx, accessToken, payload)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // SendWebhook provides a mock function with given fields: ctx, accessToken, payload
 func (_m *Client) SendWebhook(ctx context.Context, accessToken string, payload notificationsdk.WebhookNotifyRequest) error {
 	ret := _m.Called(ctx, accessToken, payload)
@@ -28,6 +42,7 @@ func (_m *Client) SendWebhook(ctx context.Context, accessToken string, payload n
 	return r0
 }
 
+// SendWhatsapp provides a mock function with given fields: ctx, accessToken, payload
 func (_m *Client) SendWhatsapp(ctx context.Context, accessToken string, payload notificationsdk.WhatsappNotifyRequest) error {
 	ret := _m.Called(ctx, accessToken, payload)
 
