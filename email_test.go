@@ -41,7 +41,7 @@ func Test_client_SendEmail(t *testing.T) {
 				notificationsdk.HttpClient = &mocks.HttpClient{}
 				notificationsdk.HttpClient.(*mocks.HttpClient).
 					On("DoRequest", mock.Anything, http.MethodPost, f.Config.URL+"/send-email", mock.Anything, mock.Anything).
-					Return(&http.Response{StatusCode: http.StatusAccepted, Body: io.NopCloser(bytes.NewReader([]byte{}))}, nil).
+					Return(&http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader([]byte{}))}, nil).
 					Once()
 			},
 		},

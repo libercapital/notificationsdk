@@ -24,7 +24,7 @@ func (c client) SendEmail(ctx context.Context, accessToken string, payload Email
 
 	defer res.Body.Close()
 
-	if res.StatusCode != http.StatusAccepted {
+	if res.StatusCode != http.StatusOK {
 		return fmt.Errorf("http request error (status=%v)", res.Status)
 	}
 
