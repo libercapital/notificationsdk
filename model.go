@@ -14,7 +14,7 @@ type WhatsappNotifyRequest struct {
 
 type EmailRequest struct {
 	To       Address                `json:"to"`
-	From     Address                `json:"from"`
+	From     Address                `json:"from,omitempty"`
 	Template string                 `json:"template"`
 	MetaData map[string]interface{} `json:"meta_data"`
 }
