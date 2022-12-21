@@ -34,7 +34,7 @@ func Test_client_SendWebhook(t *testing.T) {
 			mockBehavior: func(f fields) {
 				notificationsdk.HttpClient = &mocks.HttpClient{}
 				notificationsdk.HttpClient.(*mocks.HttpClient).
-					On("DoRequest", mock.Anything, http.MethodPost, f.Config.URL+"/webhook/execute", mock.Anything, mock.Anything).
+					On("DoRequest", mock.Anything, http.MethodPost, f.Config.URL+"/webhooks/execute", mock.Anything, mock.Anything).
 					Return(&http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader([]byte{}))}, nil).
 					Once()
 			},
@@ -49,7 +49,7 @@ func Test_client_SendWebhook(t *testing.T) {
 			mockBehavior: func(f fields) {
 				notificationsdk.HttpClient = &mocks.HttpClient{}
 				notificationsdk.HttpClient.(*mocks.HttpClient).
-					On("DoRequest", mock.Anything, http.MethodPost, f.Config.URL+"/webhook/execute", mock.Anything, mock.Anything).
+					On("DoRequest", mock.Anything, http.MethodPost, f.Config.URL+"/webhooks/execute", mock.Anything, mock.Anything).
 					Return(nil, errors.New("test error")).
 					Once()
 			},
@@ -64,7 +64,7 @@ func Test_client_SendWebhook(t *testing.T) {
 			mockBehavior: func(f fields) {
 				notificationsdk.HttpClient = &mocks.HttpClient{}
 				notificationsdk.HttpClient.(*mocks.HttpClient).
-					On("DoRequest", mock.Anything, http.MethodPost, f.Config.URL+"/webhook/execute", mock.Anything, mock.Anything).
+					On("DoRequest", mock.Anything, http.MethodPost, f.Config.URL+"/webhooks/execute", mock.Anything, mock.Anything).
 					Return(&http.Response{StatusCode: http.StatusBadRequest, Body: io.NopCloser(bytes.NewReader([]byte{}))}, nil).
 					Once()
 			},
