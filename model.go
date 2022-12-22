@@ -3,7 +3,7 @@ package notificationsdk
 type WebhookNotifyRequest struct {
 	Events       []string    `json:"events"`
 	VendorUUID   string      `json:"vendor_uuid"`
-	IntegratorId *string     `json:"integrator_id"`
+	IntegratorId *string     `json:"integrator_uuid"`
 	Content      interface{} `json:"content"`
 }
 
