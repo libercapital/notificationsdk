@@ -73,7 +73,7 @@ func Test_client_SendWebhook(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := notificationsdk.NewClient(tt.fields.Config)
+			c := notificationsdk.NewClient(http.Client{}, tt.fields.Config)
 			tt.mockBehavior(tt.fields)
 			err := c.SendWebhook(context.TODO(), "ACCESS_TOKEN", notificationsdk.WebhookNotifyRequest{})
 			if (err != nil) != tt.wantErr {
