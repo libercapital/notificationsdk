@@ -82,7 +82,7 @@ func Test_client_SendEmail(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := notificationsdk.NewClient(tt.fields.Config)
+			c := notificationsdk.NewClient(http.Client{}, tt.fields.Config)
 			tt.mockBehavior(tt.fields, tt.args)
 			if err := c.SendEmail(tt.args.ctx, tt.args.accessToken, tt.args.payload); (err != nil) != tt.wantErr {
 				t.Errorf("client.SendEmail() error = %v, wantErr %v", err, tt.wantErr)
