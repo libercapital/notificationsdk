@@ -28,6 +28,13 @@ client.SendEmail(ctx, "access-token", notificationsdk.EmailRequest{
 		},
 		Template: "sendgrid-template",
 		MetaData: map[string]interface{}{},
+		Attachments: []notificationsdk.Attachment{
+			{
+				FileName:    "Arquivo.pdf",
+				FileType:    "application/pdf",
+				FileContent: "ASNFZ4mrze8BI0VniavN7w==",
+			},
+		},
 	})
 ```
 
