@@ -1,4 +1,4 @@
-image: golang:1.17-alpine
+image: golang:1.21-alpine
 
 stages:
   - test
@@ -27,6 +27,7 @@ unit_tests:
   script:
     - go get ./...
     - go get gotest.tools/gotestsum
+    - go install gotest.tools/gotestsum
     - make unit-test
 
 create_tag:
