@@ -3,7 +3,6 @@ package notificationsdk
 import (
 	"context"
 	"encoding/json"
-	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/sns"
@@ -22,7 +21,7 @@ func NewSnsClient(client *sns.Client, topic string) Client {
 	return &snsClient{client, topic}
 }
 
-func (s *snsClient) send(ctx context.Context, payload any, groupID string, _type string) error {
+func (s *snsClient) send(ctx context.Context, payload any, snsParams SNSParams, _type string) error {
 	bPayload, err := json.Marshal(payload)
 	if err != nil {
 		return err
@@ -30,24 +29,11 @@ func (s *snsClient) send(ctx context.Context, payload any, groupID string, _type
 
 	stringPayload := string(bPayload)
 
-	topicList, err := s.snsClient.ListTopics(ctx, &sns.ListTopicsInput{})
-	if err != nil {
-		return err
-	}
-
-	var topicArn string
-	for _, t := range topicList.Topics {
-		topicName := strings.Split(*t.TopicArn, ":")[5]
-		if topicName == s.topic {
-			topicArn = *t.TopicArn
-			break
-		}
-	}
-
 	_, err = s.snsClient.Publish(ctx, &sns.PublishInput{
-		Message:        &stringPayload,
-		TopicArn:       &topicArn,
-		MessageGroupId: &groupID,
+		Message:                &stringPayload,
+		TopicArn:               &snsParams.TopicArn,
+		MessageGroupId:         &snsParams.GroupID,
+		MessageDeduplicationId: &snsParams.DeduplicationID,
 		MessageAttributes: map[string]types.MessageAttributeValue{
 			"type": {
 				DataType:    aws.String("String.Array"),

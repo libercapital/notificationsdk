@@ -35,5 +35,5 @@ func (c client) SendWhatsapp(ctx context.Context, payload WhatsappNotifyRequest)
 }
 
 func (s *snsClient) SendWhatsapp(ctx context.Context, payload WhatsappNotifyRequest) error {
-	return s.send(ctx, payload, payload.GroupID, "whatsapp")
+	return s.send(ctx, payload, payload.SNSParams, "whatsapp")
 }
