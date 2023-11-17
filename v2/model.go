@@ -41,5 +41,4 @@ type Attachment struct {
 type SNSParams struct {
 	DeduplicationID string
 	GroupID         string
-	TopicArn        string
 }

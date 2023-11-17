@@ -31,7 +31,7 @@ func (s *snsClient) send(ctx context.Context, payload any, snsParams SNSParams, 
 
 	_, err = s.snsClient.Publish(ctx, &sns.PublishInput{
 		Message:                &stringPayload,
-		TopicArn:               &snsParams.TopicArn,
+		TopicArn:               &s.topic,
 		MessageGroupId:         &snsParams.GroupID,
 		MessageDeduplicationId: &snsParams.DeduplicationID,
 		MessageAttributes: map[string]types.MessageAttributeValue{
