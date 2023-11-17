@@ -32,5 +32,5 @@ func (c client) SendEmail(ctx context.Context, payload EmailRequest) error {
 }
 
 func (s *snsClient) SendEmail(ctx context.Context, payload EmailRequest) error {
-	return s.send(ctx, payload, payload.GroupID, "whatsapp")
+	return s.send(ctx, payload, payload.SNSParams, "whatsapp")
 }

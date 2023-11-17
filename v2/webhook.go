@@ -31,5 +31,5 @@ func (c client) SendWebhook(ctx context.Context, payload WebhookNotifyRequest) e
 }
 
 func (s *snsClient) SendWebhook(ctx context.Context, payload WebhookNotifyRequest) error {
-	return s.send(ctx, payload, payload.GroupID, "webhook")
+	return s.send(ctx, payload, payload.SNSParams, "webhook")
 }
