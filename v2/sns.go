@@ -36,7 +36,7 @@ func (s *snsClient) send(ctx context.Context, payload any, snsParams SNSParams, 
 		MessageDeduplicationId: &snsParams.DeduplicationID,
 		MessageAttributes: map[string]types.MessageAttributeValue{
 			"type": {
-				DataType:    aws.String("String.Array"),
+				DataType:    aws.String("String"),
 				StringValue: aws.String(_type),
 			},
 		},
