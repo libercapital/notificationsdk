@@ -16,7 +16,7 @@ func (c client) SendWebhook(ctx context.Context, payload WebhookNotifyRequest) e
 		"Content-Type":  "application/json; charset=UTF-8",
 	}
 
-	res, err := HttpClient.DoRequest(ctx, http.MethodPost, c.Config.URL+"/webhooks/execute", headers, bytes.NewReader(bsBody))
+	res, err := c.doRequest(ctx, http.MethodPost, c.Config.URL+"/webhooks/execute", headers, bytes.NewReader(bsBody))
 	if err != nil {
 		return err
 	}

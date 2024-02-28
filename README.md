@@ -9,7 +9,7 @@ Responsible for encapsulating calls to the Notification service
 ## Install
 
 ```bash
-go get gitlab.com/bavatech/architecture/software/libs/go-modules/notificationsdk.git
+go get github.com/libercapital/notificationsdk
 ```
 
 ## How to use
