@@ -15,7 +15,7 @@ go get github.com/libercapital/notificationsdk
 ## How to use
 
 ```golang
-client := notificationsdk.NewClient(notificationsdk.Config{URL: "https://api.dev.bavabank.com/notification/v1"})
+client := notificationsdk.NewClient(notificationsdk.Config{URL: "https://api.xpto.com/"})
 
 client.SendEmail(ctx, "access-token", notificationsdk.EmailRequest{
 		To: notificationsdk.Address{
@@ -23,8 +23,8 @@ client.SendEmail(ctx, "access-token", notificationsdk.EmailRequest{
 			Email: "to.Address",
 		},
 		From: notificationsdk.Address{
-			Name:  "Bava",
-			Email: "developers@bavabank.com",
+			Name:  "XPTO",
+			Email: "john@email.com",
 		},
 		Template: "sendgrid-template",
 		MetaData: map[string]interface{}{},
