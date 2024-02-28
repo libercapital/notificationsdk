@@ -20,7 +20,7 @@ func (c client) SendWhatsapp(ctx context.Context, accessToken string, payload Wh
 		"Content-Type":  "application/json; charset=UTF-8",
 	}
 
-	res, err := HttpClient.DoRequest(ctx, http.MethodPost, c.Config.URL+"/send-whatsapp", headers, bytes.NewReader(bsBody))
+	res, err := c.doRequest(ctx, http.MethodPost, c.Config.URL+"/send-whatsapp", headers, bytes.NewReader(bsBody))
 	if err != nil {
 		return err
 	}

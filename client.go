@@ -2,14 +2,17 @@ package notificationsdk
 
 import (
 	"context"
+	"io"
 	"net/http"
 
-	"gitlab.com/bavatech/architecture/software/libs/go-modules/bava-http.git/httpclient"
+	"github.com/kataras/compress"
+	liberlogger "github.com/libercapital/liber-logger-go"
 	httptrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/net/http"
 )
 
 type client struct {
-	Config Config
+	Config     Config
+	httpClient http.Client
 }
 
 type Client interface {
@@ -17,8 +20,6 @@ type Client interface {
 	SendWhatsapp(ctx context.Context, accessToken string, payload WhatsappNotifyRequest) error
 	SendEmail(ctx context.Context, accessToken string, payload EmailRequest) error
 }
-
-var HttpClient httpclient.HttpClient
 
 func NewClient(cli http.Client, config Config) Client {
 	opt := []httptrace.RoundTripperOption{
@@ -28,9 +29,42 @@ func NewClient(cli http.Client, config Config) Client {
 		}),
 	}
 
-	HttpClient = httpclient.New(httptrace.WrapClient(&cli, opt...))
+	HttpClient := httptrace.WrapClient(&cli, opt...)
 
 	return client{
-		Config: config,
+		Config:     config,
+		httpClient: *HttpClient,
 	}
+}
+
+func (c client) doRequest(ctx context.Context, httpMethod, url string, headers map[string]string, body io.Reader, redactHeaders ...string) (*http.Response, error) {
+	if c.httpClient.Transport == nil {
+		c.httpClient.Transport = liberlogger.HttpClient{
+			Proxied:      http.DefaultTransport,
+			RedactedKeys: redactHeaders,
+		}
+	}
+
+	request, err := http.NewRequestWithContext(ctx, httpMethod, url, body)
+	if err != nil {
+		return nil, err
+	}
+
+	for key, value := range headers {
+		request.Header.Set(key, value)
+	}
+
+	response, err := c.httpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+
+	if response.Header.Get("Content-Encoding") == "deflate" {
+		reader, _ := compress.NewReader(response.Body, compress.DEFLATE)
+		defer reader.Close()
+
+		response.Body = reader
+	}
+
+	return response, nil
 }

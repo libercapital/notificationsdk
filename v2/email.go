@@ -16,8 +16,7 @@ func (c client) SendEmail(ctx context.Context, payload EmailRequest) error {
 		"Content-Type":  "application/json; charset=UTF-8",
 	}
 
-	res, err := HttpClient.DoRequest(ctx, http.MethodPost, c.Config.URL+"/send-email", headers, bytes.NewReader(bsBody))
-
+	res, err := c.doRequest(ctx, http.MethodPost, c.Config.URL+"/send-email", headers, bytes.NewReader(bsBody))
 	if err != nil {
 		return err
 	}

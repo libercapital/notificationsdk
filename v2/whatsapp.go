@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-const (
-	PaymentLinkInvoiceCreatedTemplate = "PAYMENT_LINK_INVOICE_CREATED"
-)
-
 func (c client) SendWhatsapp(ctx context.Context, payload WhatsappNotifyRequest) error {
 	bsBody, _ := json.Marshal(payload)
 
@@ -20,7 +16,7 @@ func (c client) SendWhatsapp(ctx context.Context, payload WhatsappNotifyRequest)
 		"Content-Type":  "application/json; charset=UTF-8",
 	}
 
-	res, err := HttpClient.DoRequest(ctx, http.MethodPost, c.Config.URL+"/send-whatsapp", headers, bytes.NewReader(bsBody))
+	res, err := c.doRequest(ctx, http.MethodPost, c.Config.URL+"/send-whatsapp", headers, bytes.NewReader(bsBody))
 	if err != nil {
 		return err
 	}
