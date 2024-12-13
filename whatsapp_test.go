@@ -5,7 +5,7 @@ package notificationsdk_test
 // 	"net/http"
 // 	"testing"
 //
-// 	"github.com/libercapital/notificationsdk"
+// 	"github.com/libercapital/notificationsdk/v2"
 // )
 //
 // func Test_client_SendWhatsapp(t *testing.T) {
@@ -71,7 +71,7 @@ package notificationsdk_test
 // 		t.Run(tt.name, func(t *testing.T) {
 // 			c := notificationsdk.NewClient(http.Client{}, tt.fields.Config)
 // 			tt.mockBehavior(tt.fields)
-// 			err := c.SendWhatsapp(context.TODO(), "ACCESS_TOKEN", notificationsdk.WhatsappNotifyRequest{})
+// 			err := c.SendWhatsapp(context.TODO(), notificationsdk.WhatsappNotifyRequest{})
 // 			if (err != nil) != tt.wantErr {
 // 				t.Errorf("c.SendWhatsapp() error = %v, wantErr %v", err, tt.wantErr)
 // 				return

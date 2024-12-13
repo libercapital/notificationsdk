@@ -8,11 +8,11 @@ import (
 	"net/http"
 )
 
-func (c client) SendEmail(ctx context.Context, accessToken string, payload EmailRequest) error {
+func (c client) SendEmail(ctx context.Context, payload EmailRequest) error {
 	bsBody, _ := json.Marshal(payload)
 
 	headers := map[string]string{
-		"Authorization": "Bearer " + accessToken,
+		"Authorization": "Bearer " + payload.AccessToken,
 		"Content-Type":  "application/json; charset=UTF-8",
 	}
 
@@ -28,4 +28,8 @@ func (c client) SendEmail(ctx context.Context, accessToken string, payload Email
 	}
 
 	return nil
+}
+
+func (s *snsClient) SendEmail(ctx context.Context, payload EmailRequest) error {
+	return s.send(ctx, payload, payload.SNSParams, "email")
 }

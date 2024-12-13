@@ -8,11 +8,11 @@ import (
 	"net/http"
 )
 
-func (c client) SendWebhook(ctx context.Context, accessToken string, payload WebhookNotifyRequest) error {
+func (c client) SendWebhook(ctx context.Context, payload WebhookNotifyRequest) error {
 	bsBody, _ := json.Marshal(payload)
 
 	headers := map[string]string{
-		"Authorization": "Bearer " + accessToken,
+		"Authorization": "Bearer " + payload.AccessToken,
 		"Content-Type":  "application/json; charset=UTF-8",
 	}
 
@@ -28,4 +28,8 @@ func (c client) SendWebhook(ctx context.Context, accessToken string, payload Web
 	}
 
 	return nil
+}
+
+func (s *snsClient) SendWebhook(ctx context.Context, payload WebhookNotifyRequest) error {
+	return s.send(ctx, payload, payload.SNSParams, "webhook")
 }

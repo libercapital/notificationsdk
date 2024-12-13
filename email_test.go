@@ -3,16 +3,14 @@ package notificationsdk_test
 // import (
 // 	"context"
 // 	"net/http"
-// 	"net/http/httptest"
 // 	"testing"
 //
-// 	"github.com/libercapital/notificationsdk"
+// 	"github.com/libercapital/notificationsdk/v2"
 // )
 //
 // func Test_client_SendEmail(t *testing.T) {
 // 	type fields struct {
-// 		Config     notificationsdk.Config
-// 		httpClient http.Client
+// 		Config notificationsdk.Config
 // 	}
 // 	type args struct {
 // 		ctx         context.Context
@@ -33,7 +31,6 @@ package notificationsdk_test
 // 				Config: notificationsdk.Config{
 // 					URL: "http://localhost:1000",
 // 				},
-// 				httpClient: httptest.Server{},
 // 			},
 // 			mockBehavior: func(f fields, a args) {
 // 				// notificationsdk.HttpClient = &mocks.HttpClient{}
@@ -82,7 +79,7 @@ package notificationsdk_test
 // 		t.Run(tt.name, func(t *testing.T) {
 // 			c := notificationsdk.NewClient(http.Client{}, tt.fields.Config)
 // 			tt.mockBehavior(tt.fields, tt.args)
-// 			if err := c.SendEmail(tt.args.ctx, tt.args.accessToken, tt.args.payload); (err != nil) != tt.wantErr {
+// 			if err := c.SendEmail(tt.args.ctx, tt.args.payload); (err != nil) != tt.wantErr {
 // 				t.Errorf("client.SendEmail() error = %v, wantErr %v", err, tt.wantErr)
 // 			}
 // 		})

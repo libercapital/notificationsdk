@@ -12,13 +12,13 @@ import (
 
 type client struct {
 	Config     Config
-	httpClient http.Client
+	httpClient *http.Client
 }
 
 type Client interface {
-	SendWebhook(ctx context.Context, accessToken string, payload WebhookNotifyRequest) error
-	SendWhatsapp(ctx context.Context, accessToken string, payload WhatsappNotifyRequest) error
-	SendEmail(ctx context.Context, accessToken string, payload EmailRequest) error
+	SendWebhook(ctx context.Context, payload WebhookNotifyRequest) error
+	SendWhatsapp(ctx context.Context, payload WhatsappNotifyRequest) error
+	SendEmail(ctx context.Context, payload EmailRequest) error
 }
 
 func NewClient(cli http.Client, config Config) Client {
@@ -29,11 +29,11 @@ func NewClient(cli http.Client, config Config) Client {
 		}),
 	}
 
-	HttpClient := httptrace.WrapClient(&cli, opt...)
+	httpClient := httptrace.WrapClient(&cli, opt...)
 
 	return client{
 		Config:     config,
-		httpClient: *HttpClient,
+		httpClient: httpClient,
 	}
 }
 

@@ -8,15 +8,11 @@ import (
 	"net/http"
 )
 
-const (
-	PaymentLinkInvoiceCreatedTemplate = "PAYMENT_LINK_INVOICE_CREATED"
-)
-
-func (c client) SendWhatsapp(ctx context.Context, accessToken string, payload WhatsappNotifyRequest) error {
+func (c client) SendWhatsapp(ctx context.Context, payload WhatsappNotifyRequest) error {
 	bsBody, _ := json.Marshal(payload)
 
 	headers := map[string]string{
-		"Authorization": "Bearer " + accessToken,
+		"Authorization": "Bearer " + payload.AccessToken,
 		"Content-Type":  "application/json; charset=UTF-8",
 	}
 
@@ -32,4 +28,8 @@ func (c client) SendWhatsapp(ctx context.Context, accessToken string, payload Wh
 	}
 
 	return nil
+}
+
+func (s *snsClient) SendWhatsapp(ctx context.Context, payload WhatsappNotifyRequest) error {
+	return s.send(ctx, payload, payload.SNSParams, "whatsapp")
 }
