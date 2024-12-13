@@ -5,7 +5,7 @@ package notificationsdk_test
 // 	"net/http"
 // 	"testing"
 //
-// 	"github.com/libercapital/notificationsdk"
+// 	"github.com/libercapital/notificationsdk/v2"
 // )
 //
 // func Test_client_SendWebhook(t *testing.T) {
@@ -70,7 +70,7 @@ package notificationsdk_test
 // 		t.Run(tt.name, func(t *testing.T) {
 // 			c := notificationsdk.NewClient(http.Client{}, tt.fields.Config)
 // 			tt.mockBehavior(tt.fields)
-// 			err := c.SendWebhook(context.TODO(), "ACCESS_TOKEN", notificationsdk.WebhookNotifyRequest{})
+// 			err := c.SendWebhook(context.TODO(), notificationsdk.WebhookNotifyRequest{})
 // 			if (err != nil) != tt.wantErr {
 // 				t.Errorf("c.SendWebhook() error = %v, wantErr %v", err, tt.wantErr)
 // 				return

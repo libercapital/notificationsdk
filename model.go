@@ -5,12 +5,17 @@ type WebhookNotifyRequest struct {
 	VendorUUID     string      `json:"vendor_uuid"`
 	IntegratorUUID *string     `json:"integrator_uuid"`
 	Content        interface{} `json:"content"`
+	SNSParams      SNSParams   `json:"-"`
+	AccessToken    string      `json:"-"`
 }
 
 type WhatsappNotifyRequest struct {
-	To       string   `json:"to"`
-	Metadata []string `json:"metadata"`
-	Template string   `json:"template"`
+	To               string            `json:"to"`
+	Metadata         []string          `json:"metadata"`
+	Template         string            `json:"template"`
+	ContentVariables map[string]string `json:"content_variables"`
+	SNSParams        SNSParams         `json:"-"`
+	AccessToken      string            `json:"-"`
 }
 
 type EmailRequest struct {
@@ -19,6 +24,8 @@ type EmailRequest struct {
 	Template    string                 `json:"template"`
 	MetaData    map[string]interface{} `json:"meta_data"`
 	Attachments []Attachment           `json:"attachments"`
+	SNSParams   SNSParams              `json:"-"`
+	AccessToken string                 `json:"-"`
 }
 
 type Address struct {
@@ -30,4 +37,9 @@ type Attachment struct {
 	FileName    string `json:"file_name"`
 	FileType    string `json:"file_type"`
 	FileContent string `json:"file_content"`
+}
+
+type SNSParams struct {
+	DeduplicationID string
+	GroupID         string
 }
